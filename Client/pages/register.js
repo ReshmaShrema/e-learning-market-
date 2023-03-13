@@ -1,4 +1,5 @@
-import React,{useState} from 'react'
+import React,{useState} from 'react';
+import axios from 'axios';
 const Register = () => {
     const[name,setName]=useState('');
     const[email,setEmail]=useState('');
@@ -13,9 +14,13 @@ const Register = () => {
     const passwordChangeHandler=(event)=>{
         setPassword(event.target.value);
     }
-    const handleSubmit=(event)=>{
+    const handleSubmit=async (event)=>{
         event.preventDefault();
-        console.table({name,email,password})
+        //console.table({name,email,password})
+        const {data} = await axios.post(`http://localhost:8000/api/register`,{
+            name,email,password
+        });
+        console.log('Register dat ghhga',data)
 
     }
     return (

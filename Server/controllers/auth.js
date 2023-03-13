@@ -1,3 +1,4 @@
 exports.register=(req,res)=>{
-    res.send('register user');
+    console.log(req.body);
+    res.json('register user');
 }
