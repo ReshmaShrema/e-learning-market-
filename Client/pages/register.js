@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { SyncOutlined } from '@ant-design/icons';
 
 const Register = () => {
+    
     const[name,setName]=useState('');
     const[email,setEmail]=useState('');
     const[password,setPassword]=useState('');
@@ -23,9 +24,11 @@ const Register = () => {
         //console.table({name,email,password})
         try{
             setLoading(true);
-const {data} = await axios.post(`http://localhost:8000/api/register`,{
-            name,email,password
-        });
+const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API}/register`, {
+    name,
+    email,
+    password,
+});
         toast.success('Registration Successfull Please Login');
         setLoading(false)
         //console.log('Register dat ghhga',data)
