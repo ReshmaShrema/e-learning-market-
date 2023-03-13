@@ -2,6 +2,7 @@ const express=require('express');
 const morgon=require('morgan');
 const cors = require('cors');
 const {readdirSync} = require('fs');
+const mongoose=require('mongoose');
 require('dotenv').config();
 
 //create express app
@@ -17,6 +18,17 @@ app.use(morgon('dev'));
 readdirSync('./routes').map((r)=>{
     app.use('/api',require(`./routes/${r}`))
 });
+
+
+//moongoose connection
+
+mongoose
+    .connect(process.env.DATABASE, {})
+    .then(() => console.log('DB connected'))
+    .catch((err) => console.log('DB Error => ', err));
+
+
+
 
 
 //port
