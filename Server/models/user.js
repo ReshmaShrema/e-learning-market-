@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const {Schema} = mongoose;
 const userSchema = new Schema({
     name: {
@@ -23,12 +23,14 @@ const userSchema = new Schema({
         default: '/avatar.png',
     },
     role: {
-        type: [Sting],
+        type: [String],
         default: ['Subscriber'],
         enum: ['Subscriber','Instructor','Admin'],
     },
-    stripe_account_id:'',
-    stripe_seller:{},
-    stripeSession:{},
+   // stripe_account_id:' ',
+    //stripe_seller:{},
+    //stripeSession:{},
 },{timestamps:true});
-export default mongoose.model('User',userSchema);
+//module.export = mongoose.model('User',userSchema);
+
+module.exports = mongoose.model('User', userSchema);
