@@ -14,7 +14,7 @@ app.use(morgon('dev'));
 
 
 //routes
-fs.readdirSync('./routes').map((r)=>{
+readdirSync('./routes').map((r)=>{
     app.use('/api',require(`./routes/${r}`))
 });
 
