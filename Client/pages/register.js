@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { SyncOutlined } from '@ant-design/icons';
+import Link from 'next/link'
 
 const Register = () => {
     
@@ -72,6 +73,7 @@ const { data } = await axios.post(`/api/register`, {
                     <button className="btn col-12 btn-primary" type="submit" disabled={!name || !email || !password ||loading}>{loading?<SyncOutlined spin/>:"Submit"}
 </button>
                 </form>
+                <p className='text-center p-2'>Already registered?<Link href='/login'>Login</Link></p>
             </div>
         </>
     );
