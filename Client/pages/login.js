@@ -28,7 +28,7 @@ const Login= () => {
                 email,
                 password,
             });
-           
+           console.log(data)
             setLoading(false);
          
         } catch (err) {
