@@ -4,18 +4,37 @@ import {
     AppstoreOutlined,
     LoginOutlined,
     UserAddOutlined,
+    LogoutOutlined,
 } from '@ant-design/icons';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { Context } from '../context';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+
 
 const { Item } = Menu;
 const TopNav = () => {
-    const[current,setCurrent]=useState();
+  
+    const [current, setCurrent] = useState();
+    const { state, dispatch } = useContext(Context); 
+     const router = useRouter();
     useEffect(() => {
         //window.location.pathname give the url
         //ensure it in browser
-        console.log(window.location.pathname)
+        console.log(window.location.pathname);
         typeof window !== 'undefined' && setCurrent(window.location.pathname);
     }, [typeof window !== 'undefined' && window.location.pathname]);
+    const logout = async () => {
+      const { data } = await axios.get(`/api/logout`)
+        window.localStorage.removeItem('user');
+        dispatch({
+            type: 'LOGOUT',
+        });
+        console.log('ddf',data)
+        toast.success(data.message);
+        router.push('/login');
+    };
 
     return (
         <Menu mode="horizontal" selectedKeys={[current]}>
@@ -45,6 +64,13 @@ const TopNav = () => {
                 <Link href="/register" legacyBehavior>
                     <a>Register</a>
                 </Link>
+            </Item>
+            <Item
+                onClick={logout}
+                icon={<LogoutOutlined />}
+                className="ms-auto"
+            >
+                <a>Logout</a>
             </Item>
         </Menu>
     );
