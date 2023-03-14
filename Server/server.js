@@ -21,7 +21,7 @@ readdirSync('./routes').map((r)=>{
 
 
 //moongoose connection
-
+console.log(process.env.DATABASE);
 mongoose
     .connect(process.env.DATABASE, {})
     .then(() => console.log('DB connected'))

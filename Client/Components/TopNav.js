@@ -21,7 +21,7 @@ const TopNav = () => {
         <Menu mode="horizontal" selectedKeys={[current]}>
             <Item
                 key="/"
-                onClick={(e) => set(e.key)}
+                onClick={(e) => setCurrent(e.key)}
                 icon={<AppstoreOutlined />}
             >
                 <Link href="/" legacyBehavior>
@@ -29,7 +29,7 @@ const TopNav = () => {
                 </Link>
             </Item>
             <Item
-                onClick={(e) => set(e.key)}
+                onClick={(e) => setCurrent(e.key)}
                 key="/login"
                 icon={<LoginOutlined />}
             >
@@ -38,7 +38,7 @@ const TopNav = () => {
                 </Link>
             </Item>
             <Item
-                onClick={(e) => set(e.key)}
+                onClick={(e) => setCurrent(e.key)}
                 key="/register"
                 icon={<UserAddOutlined />}
             >
