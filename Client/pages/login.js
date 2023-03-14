@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { SyncOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import { Context } from '../context';
-
+import {useRouter} from 'next/router';
 const Login= () => {
 
 
@@ -16,7 +16,9 @@ const Login= () => {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
 
-    
+    //router
+const router=useRouter();
+
     const emailChangeHandler = (event) => {
         setEmail(event.target.value);
     };
@@ -36,6 +38,9 @@ const Login= () => {
             });
             console.log(data)
            dispatch({type:'LOGIN',payload:data})
+           window.localStorage.setItem('user',JSON.stringify(data));
+           //router
+           router.push('/');
             setLoading(false);
          
         } catch (err) {

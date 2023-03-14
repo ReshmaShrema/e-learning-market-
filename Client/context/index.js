@@ -1,4 +1,4 @@
-const { createContext, useReducer } = require("react");
+const { createContext, useReducer, useEffect } = require("react");
 //create initial state
 const initialState = {
     user:null
@@ -19,6 +19,12 @@ const rootReducer =(state,action)=>{
 //create provider
 const Provider=({children})=>{
     const [state,dispatch]=useReducer(rootReducer,initialState);
+    useEffect(()=>{
+        dispatch({
+            type:"LOGIN",
+            payload:JSON.parse(window.localStorage.getItem('user'))
+        })
+    },[])
     return(
         <Context.Provider value={{state,dispatch}}>{children}</Context.Provider>
     );
