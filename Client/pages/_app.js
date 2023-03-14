@@ -6,12 +6,15 @@ import TopNav from '../Components/TopNav';
 // import 'react-toastify/dist/ReactToastify.css';
   import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
+import { Provider } from '../context';
 function MyApp({Component,pageProps}){
     return (
         <>
-        <ToastContainer position='top-center'/>
+            <Provider >
+            <ToastContainer position="top-center" />
             <TopNav />
             <Component {...pageProps} />
+            </Provider >
         </>
     );
 }

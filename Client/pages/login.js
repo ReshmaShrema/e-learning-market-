@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { SyncOutlined } from '@ant-design/icons';
 import Link from 'next/link';
+import { Context } from '../context';
 
 const Login= () => {
+
+
+    //global state
+    const {state,dispatch}=useContext(Context)
+    console.log(state)
    
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -28,7 +34,8 @@ const Login= () => {
                 email,
                 password,
             });
-           console.log(data)
+            console.log(data)
+           dispatch({type:'LOGIN',payload:data})
             setLoading(false);
          
         } catch (err) {

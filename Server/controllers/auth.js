@@ -51,7 +51,7 @@ exports.login=async (req,res)=>{
             //secure:true//only works on https
         });
         //sent json as response
-       // res.json(user);
+       res.json(user);
 
     }
     
