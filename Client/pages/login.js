@@ -1,23 +1,21 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { SyncOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import { Context } from '../context';
-import {useRouter} from 'next/router';
-const Login= () => {
-
-
+import { useRouter } from 'next/router';
+const Login = () => {
     //global state
-    const {state,dispatch}=useContext(Context)
-    console.log(state)
-   
+    const { state, dispatch } = useContext(Context);
+    const {user} =state;
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
 
     //router
-const router=useRouter();
+    const router = useRouter();
 
     const emailChangeHandler = (event) => {
         setEmail(event.target.value);
@@ -25,24 +23,28 @@ const router=useRouter();
     const passwordChangeHandler = (event) => {
         setPassword(event.target.value);
     };
+
+    useEffect(()=>{
+        if(user!==null){
+            router.push('/');
+        }
+    },[user])
     const handleSubmit = async (event) => {
         event.preventDefault();
         //console.table({name,email,password})
         try {
             setLoading(true);
-            
+
             const { data } = await axios.post(`/api/login`, {
-              
                 email,
                 password,
             });
-            console.log(data)
-           dispatch({type:'LOGIN',payload:data})
-           window.localStorage.setItem('user',JSON.stringify(data));
-           //router
-           router.push('/');
+            console.log(data);
+            dispatch({ type: 'LOGIN', payload: data });
+            window.localStorage.setItem('user', JSON.stringify(data));
+            //router
+            router.push('/');
             setLoading(false);
-         
         } catch (err) {
             setLoading(false);
             toast.error(err.response.data);
