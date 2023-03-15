@@ -5,6 +5,7 @@ import {
     LoginOutlined,
     UserAddOutlined,
     LogoutOutlined,
+    CoffeeOutlined,
 } from '@ant-design/icons';
 import { useContext, useEffect, useState } from 'react';
 import { Context } from '../context';
@@ -13,12 +14,13 @@ import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 
 
-const { Item } = Menu;
+const { Item,SubMenu } = Menu;
 const TopNav = () => {
   
     const [current, setCurrent] = useState();
     const { state, dispatch } = useContext(Context); 
      const router = useRouter();
+     const {user} = state;
     useEffect(() => {
         //window.location.pathname give the url
         //ensure it in browser
@@ -47,31 +49,43 @@ const TopNav = () => {
                     <a>App</a>
                 </Link>
             </Item>
-            <Item
-                onClick={(e) => setCurrent(e.key)}
-                key="/login"
-                icon={<LoginOutlined />}
-            >
-                <Link href="/login" legacyBehavior>
-                    <a>Login</a>
-                </Link>
-            </Item>
-            <Item
-                onClick={(e) => setCurrent(e.key)}
-                key="/register"
-                icon={<UserAddOutlined />}
-            >
-                <Link href="/register" legacyBehavior>
-                    <a>Register</a>
-                </Link>
-            </Item>
-            <Item
-                onClick={logout}
-                icon={<LogoutOutlined />}
-                className="ms-auto"
-            >
-                <a>Logout</a>
-            </Item>
+            {user === null && (
+                <>
+                    <Item
+                        onClick={(e) => setCurrent(e.key)}
+                        key="/login"
+                        icon={<LoginOutlined />}
+                    >
+                        <Link href="/login" legacyBehavior>
+                            <a>Login</a>
+                        </Link>
+                    </Item>
+                    <Item
+                        onClick={(e) => setCurrent(e.key)}
+                        key="/register"
+                        icon={<UserAddOutlined />}
+                    >
+                        <Link href="/register" legacyBehavior>
+                            <a>Register</a>
+                        </Link>
+                    </Item>
+                </>
+            )}
+            {user !== null && (
+                // <SubMenu key='001'
+                //     icon={CoffeeOutlined}
+                //     title={user && user.name}
+                //     className="ms-auto"
+                // >
+                <SubMenu icon={<CoffeeOutlined/>} title={user&&user.name} className='ms-auto'>
+                    
+                    <Item onClick={logout}>
+                        <a>Logout</a>
+                    </Item>
+                </SubMenu>
+
+                // </SubMenu>
+            )}
         </Menu>
     );
 };
