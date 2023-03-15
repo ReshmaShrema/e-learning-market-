@@ -4,7 +4,8 @@ const cors = require('cors');
 const {readdirSync} = require('fs');
 const mongoose=require('mongoose');
 require('dotenv').config();
-
+const csrf=require('csurf');
+const cookieParser =require('cookie-parser');
 //create express app
 const app = express();
 
@@ -12,13 +13,19 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(morgon('dev'));
-
+app.use(cookieParser());
 
 //routes
 readdirSync('./routes').map((r)=>{
     app.use('/api',require(`./routes/${r}`))
 });
 
+
+const csrfProtection = csrf({cookie:true});
+app.use(csrfProtection)
+app.get('/api/csrf-token',(req,res)=>{
+    res.json({csrfToken:req.csrfToken()});
+});
 
 //moongoose connection
 console.log(process.env.DATABASE);
